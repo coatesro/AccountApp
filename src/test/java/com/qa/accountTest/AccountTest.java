@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.qa.app.AccountApp;
+import com.qa.app.AccountRepositoryDB;
 import com.qa.app.AccountRepositoryMap;
 
 import junit.framework.TestCase;
@@ -48,17 +49,47 @@ public class AccountTest
 		}
 	
 	
+//	@Test
+//	public void accountRepositoryMapTest() {
+//		AccountRepositoryMap arm = new AccountRepositoryDB();
+//		AccountApp a = new AccountApp();
+//
+//		a.setFirstName("Chris");
+//		arm.add(a);
+//		AccountApp retreive = arm.retrieve();
+//		assertEquals("wrong account retreived", "Chris", retreive.getFirstName());
+//		assertEquals("wrong account", a, retreive);
+//	}
+	
 	@Test
-	public void accountRepositoryMapTest() {
-		AccountRepositoryMap arm = new AccountRepositoryMap();
+	public void DBtest() {
 		AccountApp a = new AccountApp();
-		int id = 2;
-		a.setID(id);
-		a.setFirstName("Chris");
-		arm.add(a);
-		AccountApp retreive = arm.retrieve(id);
-		assertEquals("wrong account retreived", "Chris", retreive.getFirstName());
-		assertEquals("wrong account", a, retreive);
+		AccountRepositoryDB db = new AccountRepositoryDB();
+		db.add(a);
+		int id = a.getID();
+		AccountApp accountBack = db.retrieve(id);
+		assertEquals(a, accountBack);
+	}
+	
+	@Test
+	public void DBupdate() {
+		AccountApp account = new AccountApp();
+		AccountRepositoryDB db = new AccountRepositoryDB();
+		account.setFirstName("Adrian");
+		db.add(account);
+		int id = account.getID();
+		db.updateFirstName(id, "Danny");
+		String firstName = account.getFirstName();
+		assertEquals("Wrong name update", "Danny", firstName);
+	}
+	@Test
+	public void DBremove() {
+		AccountApp acc = new AccountApp();
+		AccountRepositoryDB db = new AccountRepositoryDB();
+		db.add(acc);
+		int id = acc.getID();
+		db.remove(id);
+		assertEquals("Id not removed", null, db.retrieve(id));
 	}
 	
 }
