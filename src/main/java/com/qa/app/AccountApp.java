@@ -1,14 +1,26 @@
 package com.qa.app;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class AccountApp 
 {
-
-	int id;
-	String firstName;
-	String lastName;
-	int accountNum;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE) 
+	private int id;
+	private String firstName;
+	private String lastName;
+	private int accountNum;
 	
+//	public AccountApp(int id, String firstName, String lastName, int accountNum) {
+//		this.id = id;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.accountNum = accountNum;
+//	}
 	
 	public void setID(int id) {
 		this.id = id;
